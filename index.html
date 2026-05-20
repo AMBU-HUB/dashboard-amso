@@ -203,10 +203,19 @@
             const ctxAl = document.getElementById('chart-alertas');
             if (chartAlertas) chartAlertas.destroy();
             
+            const total = tasks.length;
+            const rojoPercent = total > 0 ? ((alertaCounts['ROJO'] / total) * 100).toFixed(1) : 0;
+            const amarilloPercent = total > 0 ? ((alertaCounts['AMARILLO'] / total) * 100).toFixed(1) : 0;
+            const verdePercent = total > 0 ? ((alertaCounts['VERDE'] / total) * 100).toFixed(1) : 0;
+
             chartAlertas = new Chart(ctxAl, {
                 type: 'doughnut',
                 data: {
-                    labels: ['Crítica', 'En Proceso', 'Completado'],
+                    labels: [
+                        'Crítica ' + rojoPercent + '%',
+                        'En Proceso ' + amarilloPercent + '%',
+                        'Completado ' + verdePercent + '%'
+                    ],
                     datasets: [{
                         data: [alertaCounts['ROJO'], alertaCounts['AMARILLO'], alertaCounts['VERDE']],
                         backgroundColor: ['#ef4444', '#f59e0b', '#22c55e']
